@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ToDo</title>
+</head>
+<body>
+<form action=/ method="get">
+    <label>Search</label>
+    <input type="hidden" name="status" value={{ request.args.get('status') if request.args.get('status') is not none
+    else '' }}>
+    <input type="text" name="substring">
+    <input type="submit" value="Find">
+</form>
+
+<form action=/add method="get">
+    <button>Add new task</button>
+</form>
+<a href='/?status=active'>
+    <button>Active</button>
+</a>
+<a href='/?status=finished'>
+    <button>Finished</button>
+</a>
+<a href='/'>
+    <button>All</button>
+</a>
+<ul id="navigation">
+    {% for i in range(length) %}
+    <li>
+        <div class="task-form">
+            <form action=/finish_task?index={{i}} method="post">
+                {% if not todo_list[i].finished %}
+                <button>Finish</button>
+                {% endif %}
+                <span>{{todo_list[i].description}}</span>
+            </form>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+</body>
+</html>
